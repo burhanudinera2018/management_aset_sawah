@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Daftar Transaksi Sewa{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Daftar Transaksi Sewa</h3>
+    <a href="{{ url_for('tambah_transaksi') }}" class="btn btn-success">+ Tambah Transaksi</a>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-success">
+        <tr>
+            <th>ID</th>
+            <th>Aset</th>
+            <th>Penyewa</th>
+            <th>Tanggal Mulai</th>
+            <th>Tanggal Akhir</th>
+            <th>Nilai Sewa</th>
+            <th>Tanaman</th>
+            <th>Tindakan</th> </tr>
+    </thead>
+    <tbody>
+        {% for t in data %}
+        <tr>
+            <td>{{ t.sewa_id }}</td>
+            <td>{{ t.aset.nama_sebutan if t.aset else '-' }}</td>
+            <td>{{ t.penyewa.nama_lengkap if t.penyewa else '-' }}</td>
+            <td>{{ t.tanggal_mulai.strftime('%d-%m-%Y') }}</td>
+            <td>{{ t.tanggal_akhir.strftime('%d-%m-%Y') }}</td>
+            <td>Rp {{ "{:,.0f}".format(t.nilai_sewa) }}</td>
+            <td>{{ t.jenis_tanaman_disepakati }}</td>
+            
+            <td>
+                <form method="POST" 
+                      action="{{ url_for('delete_transaksi', sewa_id=t.sewa_id) }}" 
+                      style="display:inline;">
+                    <button type="submit" 
+                            class="btn btn-sm btn-danger"
+                            onclick="return confirm('Apakah Anda yakin ingin menghapus transaksi ID {{ t.sewa_id }}?')">
+                        Hapus
+                    </button>
+                </form>
+            </td>
+            
+        </tr>
+        {% else %}
+        <tr><td colspan="8" class="text-center text-muted">Belum ada transaksi sewa.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

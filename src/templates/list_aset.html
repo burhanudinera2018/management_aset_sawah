@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Daftar Aset Sawah{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Daftar Aset Sawah</h3>
+    <a href="{{ url_for('tambah_aset') }}" class="btn btn-success">+ Tambah Aset</a>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-success">
+        <tr>
+            <th>ID</th>
+            <th>Nama Sebutan</th>
+            <th>Nomor Sertifikat</th>
+            <th>Luas (m²)</th>
+            <th>Luas (boto)</th> <th>Lokasi</th>
+            <th>Status</th>
+            <th>Tindakan</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for a in data %}
+        <tr>
+            <td>{{ a.aset_id }}</td>
+            <td>{{ a.nama_sebutan }}</td>
+            <td>{{ a.nomor_sertifikat }}</td>
+            <td>{{ a.luas_m2 }}</td>
+            
+            <td>{{ a.luas_boto | round(2) if a.luas_boto is not none else '-' }}</td>
+            
+            <td>{{ a.lokasi }}</td>
+            <td>{{ a.status_sewa }}</td>
+            <td>
+                <a href="{{ url_for('edit_aset', aset_id=a.aset_id) }}" class="btn btn-sm btn-info me-2">Edit</a>
+                
+                <form method="POST" action="{{ url_for('delete_aset', aset_id=a.aset_id) }}" style="display:inline;">
+                    <button type="submit" 
+                            class="btn btn-sm btn-danger"
+                            onclick="return confirm('Apakah Anda yakin ingin menghapus aset {{ a.nama_sebutan }}?')">
+                        Hapus
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="8" class="text-center text-muted">Belum ada data aset.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

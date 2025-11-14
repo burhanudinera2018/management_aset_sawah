@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Form Penyewa{% endblock %}
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h4 class="mb-4">Form Penyewa</h4>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="row">
+                <div class="col-md-6">{{ form.nama_lengkap.label }} {{ form.nama_lengkap(class="form-control") }}</div>
+                <div class="col-md-6">{{ form.nik.label }} {{ form.nik(class="form-control") }}</div>
+            </div><br>
+            <div class="mb-3">{{ form.alamat.label }} {{ form.alamat(class="form-control", rows=3) }}</div>
+            <div class="mb-3">{{ form.nomor_kontak.label }} {{ form.nomor_kontak(class="form-control") }}</div>
+            <button type="submit" class="btn btn-success">{{ form.submit.label.text }}</button>
+            <a href="{{ url_for('list_penyewa') }}" class="btn btn-secondary">Kembali</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

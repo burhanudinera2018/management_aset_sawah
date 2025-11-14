@@ -1,0 +1,15 @@
+# Variabel Lingkungan dan Kredensial
+.env
+
+# Cache Python
+__pycache__/
+*.pyc
+
+# Virtual Environment
+sawah/
+venv/
+
+# Log dan Cache Editor (VS Code/PyCharm)
+.vscode/
+.idea/
+*.log

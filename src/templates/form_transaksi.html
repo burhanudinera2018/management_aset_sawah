@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Form Transaksi Sewa{% endblock %}
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h4 class="mb-4">Form Transaksi Sewa</h4>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="row mb-3">
+                <div class="col-md-6">{{ form.aset_id.label }} {{ form.aset_id(class="form-select") }}</div>
+                <div class="col-md-6">{{ form.penyewa_id.label }} {{ form.penyewa_id(class="form-select") }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4">{{ form.tanggal_mulai.label }} {{ form.tanggal_mulai(class="form-control") }}</div>
+                <div class="col-md-4">{{ form.tanggal_akhir.label }} {{ form.tanggal_akhir(class="form-control") }}</div>
+                <div class="col-md-4">{{ form.durasi_bulan.label }} {{ form.durasi_bulan(class="form-control") }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">{{ form.jenis_tanaman_disepakati.label }} {{ form.jenis_tanaman_disepakati(class="form-control") }}</div>
+            </div>
+            <button type="submit" class="btn btn-success">{{ form.submit.label.text }}</button>
+            <a href="{{ url_for('list_transaksi') }}" class="btn btn-secondary">Kembali</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

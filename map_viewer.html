@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visualisasi Aset Lahan Sawah</title>
+    <style>
+        #map {
+            height: 100vh; /* Memastikan peta memenuhi tinggi viewport */
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script>
+        // *** BAGIAN PENTING: Data dari Python harus dimasukkan ke sini ***
+        // DI SINI, data 'sawah_locations' HARUS di-generate oleh Python
+        // dan dimasukkan ke dalam JavaScript, misalnya melalui template engine 
+        // atau endpoint API (jika menggunakan Flask/Django).
+        
+        // Contoh data dummy (GANTIKAN DENGAN OUTPUT get_sawah_locations() dari Python)
+        const sawah_locations = [
+            { nama: 'Sawah Abadi', long: 107.6190, lat: -6.9175 },
+            { nama: 'Lahan Sewa Utara', long: 107.6500, lat: -6.9000 },
+            // Tambahkan data lain dari database Anda di sini
+        ];
+
+        let map;
+
+        function initMap() {
+            // Menentukan titik pusat peta (rata-rata lokasi sawah atau lokasi umum)
+            const initialCenter = { lat: -6.9175, lng: 107.6190 }; // Contoh: Bandung
+
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 12,
+                center: initialCenter,
+            });
+
+            // Menambahkan marker untuk setiap lokasi sawah
+            sawah_locations.forEach((sawah) => {
+                const position = { lat: sawah.lat, lng: sawah.long };
+                
+                // Membuat Marker
+                const marker = new google.maps.Marker({
+                    position: position,
+                    map: map,
+                    title: sawah.nama,
+                });
+
+                // Membuat jendela informasi (Infowindow)
+                const infowindow = new google.maps.InfoWindow({
+                    content: `<strong>${sawah.nama}</strong><br>Koordinat: ${sawah.lat}, ${sawah.long}`
+                });
+
+                // Tampilkan Infowindow saat marker diklik
+                marker.addListener("click", () => {
+                    infowindow.open(map, marker);
+                });
+            });
+        }
+    </script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
+</body>
+</html>
